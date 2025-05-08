@@ -2,8 +2,9 @@ pipeline{
     agent any
 
     stages{
-        stage("Hellow World"){
+        stage("Git Checkout"){
             steps{
+                sh "ls -la"
                 sh "echo 'Hellow World'"
             }
         }
