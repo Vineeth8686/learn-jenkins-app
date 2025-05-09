@@ -1,25 +1,23 @@
 pipeline{
     agent any
     stages{
-        stage{
+        stage("Test"){
             agent{
                 docker {
                     label 'slave'
                     image 'node:18-alpine'
                     reuseNode true
                 }
-
             }
-
             steps {
                 sh '''
                     ls -la
-                    node --version
+                    node --version 
                     npm --version
                     npm ci
                     npm run build
                     ls -la
-                '''
+                  '''
             }
 
         }
