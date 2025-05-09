@@ -1,11 +1,23 @@
 pipeline{
-    agent any
+    agent {
+        docker{
+            label "slave"
+            image "node:18-alpine"
+            reuseNode true
+        }
+    }
 
     stages{
         stage("Git Checkout"){
             steps{
-                sh "ls -la"
-                sh "echo 'Hellow World'"
+                sh '''
+                    node --version
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -la
+                '''
+                
             }
         }
     }
