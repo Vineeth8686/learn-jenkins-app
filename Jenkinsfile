@@ -13,12 +13,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    ls -la
-                    node --version
-                    npm --version
                     npm ci
                     npm run build
-                    ls -la
                 '''
             }
             
@@ -34,7 +30,6 @@ pipeline {
                     reuseNode true
                 }
             }
-
             steps {
                 sh '''
                     #test -f build/index.html
@@ -75,10 +70,13 @@ pipeline {
                 }
             }
         } 
-
     }
-
   }
+        stage("Deploy"){
+            steps{
+                sh 'npm install -g netlify-cli@20.1.1'
+            }
+        }
 
     // post {
     //     always {
