@@ -11,6 +11,7 @@ pipeline{
         stage("Build"){
             steps{
                 sh '''
+                    npm test
                     npm ci
                     npm run build
                 '''
