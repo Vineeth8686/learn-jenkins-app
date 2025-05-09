@@ -4,6 +4,7 @@ pipeline{
         stage("Test"){
             agent{
                 docker{
+                    label 'slave'
                     image "node:18-alpine"
                     reuseNode true
                 }
@@ -19,6 +20,8 @@ pipeline{
         stage("E2E"){
             agent{
                 docker{
+                    label 'slave'
+                    
                     image "mcr.microsoft.com/playwright:v1.39.0-jammy"
                     reuseNode true
                 }
