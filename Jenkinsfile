@@ -21,11 +21,7 @@ pipeline {
                     ls -la
                 '''
             }
-            post{
-                always{
-                    junit 'test-results/junit.xml'
-                }
-            }
+            
         }
 
         stage("Test"){
@@ -45,7 +41,14 @@ pipeline {
                     npm test
                 '''
             }
-        }
+            post{
+                always{
+                    junit 'test-results/junit.xml'
+                    }
+                }
+            }
+           
+        
 
         stage('E2E') {
             agent {
