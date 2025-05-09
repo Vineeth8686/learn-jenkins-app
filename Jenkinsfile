@@ -71,8 +71,8 @@ pipeline {
             }
         } 
     }
-  }
-        stage("Deploy"){
+
+     stage("Deploy"){
             agent {
                 docker {
                     image 'node:18-alpine'
@@ -84,6 +84,8 @@ pipeline {
                 sh 'npm install -g netlify-cli@20.1.1'
             }
         }
+  }
+       
 
     // post {
     //     always {
