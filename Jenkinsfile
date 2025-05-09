@@ -73,6 +73,13 @@ pipeline {
     }
   }
         stage("Deploy"){
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                    label 'agent'
+                }
+            }
             steps{
                 sh 'npm install -g netlify-cli@20.1.1'
             }
