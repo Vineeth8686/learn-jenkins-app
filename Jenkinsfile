@@ -4,6 +4,7 @@ pipeline{
         stage{
             agent{
                 docker {
+                    label 'slave'
                     image 'node:18-alpine'
                     reuseNode true
                 }
