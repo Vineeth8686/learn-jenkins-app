@@ -2,9 +2,13 @@ pipeline{
     agent any
     stages{
         stage("Test"){
-            agent{
-                label "slave"
-            }
+           agent {
+                docker {
+                    label "slave"
+                    image 'node:18-alpine'
+        }
+           }
+
             steps {
                 sh '''
                     ls -la
@@ -16,6 +20,8 @@ pipeline{
                   '''
             }
 
+        
+    
         }
     }
 }
