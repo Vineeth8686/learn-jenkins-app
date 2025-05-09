@@ -20,9 +20,9 @@ pipeline{
         stage("Test"){
             steps{
                 echo "Test Stage"
-                // sh '''
-                    
-                // '''
+                sh '''
+                    test -f build/index.html && echo "index.html exists" || echo "index.html not found"
+                '''
                 
             }    
         }
