@@ -21,6 +21,11 @@ pipeline {
                     ls -la
                 '''
             }
+            post{
+                always{
+                    junit 'test-results/junit.xml'
+                }
+            }
         }
 
         stage("Test"){
@@ -58,8 +63,12 @@ pipeline {
                     sleep 10
                     npx playwright test --reporter=html
                 '''
-                junit 'test-results/junit.xml'
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                
+                }
+                post{
+                    always{
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    }
                 }
             }
         } 
