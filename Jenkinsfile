@@ -3,11 +3,7 @@ pipeline{
     stages{
         stage("Test"){
             agent{
-                docker {
-                    label 'slave'
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
+                label "slave"
             }
             steps {
                 sh '''
