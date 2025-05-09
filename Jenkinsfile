@@ -1,12 +1,14 @@
 pipeline{
-    agent {
-            docker {
-                    label "slave"
-                    image 'node:18-alpine'
-                }
-           }
+    agent none
     stages{
         stage("Echo"){
+          agent {
+                docker {
+                    label 'slave'
+                    image 'node:18-alpine'
+                }
+           }  
+
             steps{
                 echo "This is from Echo Stage"
             }
@@ -50,6 +52,12 @@ pipeline{
         }
     }
     post{
+        agent {
+                docker {
+                    label 'slave'
+                    image 'node:18-alpine'
+                }
+           }
         always{
             junit 'jest-results/junit.xml'
         }
