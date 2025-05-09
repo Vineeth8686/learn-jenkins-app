@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        /*
+    
 
         stage('Build') {
             agent {
@@ -22,13 +22,13 @@ pipeline {
                 '''
             }
         }
-        */
+    
 
         stage('Test') {
             agent {
                 docker {
+                    label "agent"
                     image 'node:18-alpine'
-                    label 'agent'
                     reuseNode true
                 }
             }
@@ -44,9 +44,9 @@ pipeline {
         stage('E2E') {
             agent {
                 docker {
+                    label "agent"
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
-                    label 'agent'
                 }
             }
 
@@ -61,9 +61,9 @@ pipeline {
         }
     }
 
-    // post {
-    //     always {
-    //         junit 'jest-results/junit.xml'
-    //     }
-    // }
+    post {
+        always {
+            junit 'jest-results/junit.xml'
+        }
+    }
 }
