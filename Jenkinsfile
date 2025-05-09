@@ -1,27 +1,27 @@
-pipeline{
+pipeline {
     agent none
-    stages{
-        stage("Echo"){
-          agent {
-                docker {
-                    label 'slave'
-                    image 'node:18-alpine'
-                    reuseNode
-                }
-           }  
 
-            steps{
+    stages {
+        stage("Echo") {
+            agent {
+                docker {
+                    label 'agent' // Ensure correct label
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
                 echo "This is from Echo Stage"
             }
         }
 
-        stage("Test"){
-           agent {
+        stage("Test") {
+            agent {
                 docker {
-                    label 'slave'
+                    label 'agent'
                     image 'node:18-alpine'
                 }
-           }
+            }
             steps {
                 sh '''
                     ls -la
@@ -30,38 +30,31 @@ pipeline{
                     npm ci
                     npm run build
                     ls -la
-                  '''
+                '''
             }
         }
 
-        stage("E2E"){
-            agent{
-                docker{
-                    label "slave"
+        stage("E2E") {
+            agent {
+                docker {
+                    label "agent"
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                    
                 }
             }
-            steps{
+            steps {
                 sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    sleep 10
-                    npx playwright test
+                    npm install serve wait-on
+                    npx serve -s build &
+                    npx wait-on http://localhost:3000
+                    npx playwright test --reporter=junit
                 '''
             }
         }
     }
-    post{
-        agent {
-                docker {
-                    label 'slave'
-                    image 'node:18-alpine'
-                }
-           }
 
-        always{
-            junit 'jest-results/junit.xml'
+    post {
+        always {
+            junit '**/test-results.xml'
         }
     }
 }
