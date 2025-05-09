@@ -32,6 +32,7 @@ pipeline{
         stage("E2E"){
             agent{
                 docker{
+                    label "slave"
                     image "mcr.microsoft.com/playwright:v1.39.0-jammy"
                     reuseNode true
                 }
