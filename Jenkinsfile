@@ -11,7 +11,6 @@ pipeline{
         stage("Build"){
             steps{
                 sh '''
-                    npm test
                     npm ci
                     npm run build
                 '''
@@ -23,6 +22,7 @@ pipeline{
                 echo "Test Stage"
                 sh '''
                     test -f build/index.html && echo "index.html exists" || echo "index.html not found"
+                    npm test
                 '''
                 
             }    
