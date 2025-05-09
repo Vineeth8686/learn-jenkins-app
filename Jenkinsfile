@@ -1,5 +1,11 @@
 pipeline {
-    agent any
+    agent {
+            docker {
+                label 'agent' // Ensure correct label
+                image 'node:18-alpine'
+                reuseNode true
+                }
+            }
 
     stages {
         stage("Echo") {
