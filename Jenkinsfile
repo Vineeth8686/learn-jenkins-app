@@ -1,14 +1,14 @@
 pipeline {
-    agent any
+    agent none
 
     stages {
     
-
         stage('Build') {
             agent {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
+                    label 'agent'
                 }
             }
             steps {
@@ -61,9 +61,9 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit 'jest-results/junit.xml'
-        }
-    }
+    // post {
+    //     always {
+    //         junit 'jest-results/junit.xml'
+    //     }
+    // }
 }
