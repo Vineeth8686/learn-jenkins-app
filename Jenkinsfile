@@ -28,4 +28,9 @@ pipeline{
             }    
         }
     }
+    post{
+        always{
+            junit stdioRetention: 'ALL', testResults: '**/test-results/*.xml\''
+        }
+    }
 }
