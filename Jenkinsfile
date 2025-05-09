@@ -30,7 +30,7 @@ pipeline{
     }
     post{
         always{
-            junit stdioRetention: 'ALL', testResults: '**/test-results/*.xml\''
+            junit stdioRetention: 'ALL', testResults: '**/test-results/*.xml'
         }
     }
 }
