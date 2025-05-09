@@ -1,6 +1,17 @@
 pipeline{
-    agent none
+    agent {
+            docker {
+                    label "slave"
+                    image 'node:18-alpine'
+                }
+           }
     stages{
+        stage("Echo"){
+            steps{
+                echo "This is from Echo Stage"
+            }
+        }
+
         stage("Test"){
            agent {
                 docker {
@@ -25,7 +36,7 @@ pipeline{
                 docker{
                     label "slave"
                     image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                    reuseNode true
+                    
                 }
             }
             steps{
