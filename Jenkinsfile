@@ -8,18 +8,22 @@ pipeline{
     }
 
     stages{
-        stage("Git Checkout"){
+        stage("Build"){
             steps{
                 sh '''
-                    node --version
-                    npm --version
                     npm ci
                     npm run build
-                    ls -la
-                    id
                 '''
                 
             }
+        stage("Test"){
+            steps{
+                echo "Test Stage"
+                // sh '''
+                    
+                // '''
+                
+            }    
         }
     }
 }
