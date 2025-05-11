@@ -100,11 +100,15 @@ pipeline {
        always{
          node("agent"){
             script{
-                docker.image("node:18-alpine").inside{
-                sh 'echo "Hellow World"'
+                withDockerContainer('node:18-alpine') {
+                script{
+                    sh "npm --version"
+                }
+
+}
             }
          }
        }
     }
 }
-}
+
