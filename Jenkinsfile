@@ -98,11 +98,9 @@ pipeline {
 
     post {
        always{
-         node("agent"){  
-                withDockerContainer('node:18-alpine') {              
-                    sh "npm --version"
-             }
-         }
+         dockerNode('node:18-alpine') {
+            npm --version
+        }
        }
     }
 }
